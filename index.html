@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>IBMi License Reports</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid #000;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <h1>IBMi License  Reports</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>DC</th>
+        <th>Server Name</th>
+        <th>Model</th>
+        <th>Serial Number</th>
+        <th>In Service</th>
+        <th>RAM (in GB)</th>
+        <th>License Ordering Status</th>
+        <th>IBMi Licenses Exp Date</th>
+        <th>2023-Tracking/ Handoff Ticket</th>
+        <th>License File</th>
+        <th>IBMi License Days to Expire</th>
+      </tr>
+    </thead>
+    <tbody id="records">
+    </tbody>
+  </table>
+
+  <script>
+    // Fetch records from the server and display them in a table
+    fetch('/records')
+      .then((response) => response.json())
+      .then((data) => {
+        const recordsTable = document.getElementById('records');
+        data.forEach((record) => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${record['DC']}</td>
+            <td>${record['Server Name']}</td>
+            <td>${record['Model']}</td>
+            <td>${record['Serial Number']}</td>
+            <td>${record['In service']}</td>
+            <td>${record['RAM (in GB)']}</td>
+            <td>${record['License Ordering Status']}</td>
+            <td>${record['IBMi Licenses Exp Date']}</td>
+            <td>${record['2023-Tracking/ Handoff Ticket']}</td>
+            <td>${record['License File']}</td>
+            <td>${record['IBMi License Days to expire']}</td>
+          `;
+          recordsTable.appendChild(row);
+        });
+      })
+      .catch((error) => console.error('Error:', error));
+  </script>
+</body>
+</html>
